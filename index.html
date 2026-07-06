@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chem & Physics for Nurse Anesthesia — Exam Review</title>
+<style>
+:root{
+  --ink:#141b2b; --ink-soft:#42506b; --paper:#f6f4ee; --card:#ffffff;
+  --line:#dcd7cb; --line-strong:#c4bdad;
+  --accent:#0f5c5c; --accent-soft:#e0efec;
+  --good:#1b7a4b; --good-bg:#e6f4ec; --bad:#b23a48; --bad-bg:#fbe9ec;
+  --gold:#c08a2d;
+  --s-newtonian:#3d5a80; --s-gaslaws:#6a4c93; --s-kinetics:#b5651d;
+  --s-fluids:#1b7a6e; --s-energy:#a23b56; --s-final:#c08a2d;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  background:var(--paper); color:var(--ink); line-height:1.55;
+  padding:0 0 80px;
+}
+.wrap{max-width:820px;margin:0 auto;padding:0 20px}
+header.top{
+  border-bottom:2px solid var(--ink); padding:26px 0 20px; margin-bottom:8px;
+}
+.eyebrow{
+  font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  font-size:11px; letter-spacing:.22em; text-transform:uppercase;
+  color:var(--accent); font-weight:600;
+}
+h1{font-size:30px; line-height:1.15; margin:6px 0 4px; letter-spacing:-.01em}
+.sub{color:var(--ink-soft); font-size:15px}
+.stat-line{
+  font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  font-size:12px; color:var(--ink-soft); margin-top:10px; letter-spacing:.02em;
+}
+
+/* Home */
+h2.section-head{
+  font-size:13px; font-family:ui-monospace,Menlo,monospace; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--ink-soft); margin:34px 0 14px;
+  padding-bottom:8px; border-bottom:1px solid var(--line);
+}
+.grid{display:grid; gap:12px}
+@media(min-width:640px){.grid.two{grid-template-columns:1fr 1fr}}
+.card{
+  background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:18px 18px 16px; cursor:pointer; position:relative; overflow:hidden;
+  transition:border-color .15s, transform .08s, box-shadow .15s; text-align:left; width:100%;
+  font-family:inherit; color:inherit; display:block;
+}
+.card:hover{border-color:var(--line-strong); box-shadow:0 4px 18px rgba(20,27,43,.07)}
+.card:active{transform:translateY(1px)}
+.card:focus-visible{outline:3px solid var(--accent); outline-offset:2px}
+.card .bar{position:absolute; left:0; top:0; bottom:0; width:5px; background:var(--sc,var(--accent))}
+.card .ttl{font-size:19px; font-weight:600; letter-spacing:-.01em; padding-left:6px}
+.card .meta{
+  font-family:ui-monospace,Menlo,monospace; font-size:11.5px; color:var(--ink-soft);
+  margin-top:7px; padding-left:6px; letter-spacing:.03em;
+}
+.card .desc{font-size:13.5px; color:var(--ink-soft); margin-top:8px; padding-left:6px}
+.card.wide .ttl{font-size:22px}
+
+/* Config panel */
+.panel{
+  background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:20px; margin-top:14px;
+}
+.panel h3{font-size:16px; margin-bottom:4px}
+.panel p.hint{font-size:13.5px; color:var(--ink-soft); margin-bottom:14px}
+.row{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px}
+.chip{
+  font-family:ui-monospace,Menlo,monospace; font-size:12.5px;
+  border:1px solid var(--line-strong); background:var(--paper); color:var(--ink);
+  padding:8px 13px; border-radius:20px; cursor:pointer; transition:.12s; user-select:none;
+}
+.chip:hover{border-color:var(--accent)}
+.chip[aria-pressed="true"]{background:var(--accent); color:#fff; border-color:var(--accent)}
+.chip:focus-visible{outline:3px solid var(--accent); outline-offset:2px}
+label.field{display:block; font-size:13px; color:var(--ink-soft); margin-bottom:6px;
+  font-family:ui-monospace,Menlo,monospace; letter-spacing:.04em; text-transform:uppercase}
+.field-note{font-size:12.5px;color:var(--ink-soft);margin-top:-8px;margin-bottom:14px}
+
+/* Buttons */
+.btn{
+  font-family:inherit; font-size:16px; font-weight:600; cursor:pointer;
+  background:var(--accent); color:#fff; border:none; border-radius:10px;
+  padding:13px 22px; transition:.12s; letter-spacing:.01em;
+}
+.btn:hover{filter:brightness(1.08)}
+.btn:active{transform:translateY(1px)}
+.btn:disabled{opacity:.45; cursor:not-allowed}
+.btn.ghost{background:transparent; color:var(--accent); border:1.5px solid var(--line-strong)}
+.btn.ghost:hover{border-color:var(--accent)}
+.btn.sm{font-size:14px; padding:9px 16px}
+.btn:focus-visible{outline:3px solid var(--ink); outline-offset:2px}
+.btn-row{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+
+/* Quiz view */
+.quizbar{
+  display:flex; align-items:center; gap:14px; margin:18px 0 6px; flex-wrap:wrap;
+}
+.progress-track{flex:1; min-width:160px; height:8px; background:var(--line); border-radius:6px; overflow:hidden}
+.progress-fill{height:100%; width:0; background:var(--accent); transition:width .3s}
+.qcount{font-family:ui-monospace,Menlo,monospace; font-size:12.5px; color:var(--ink-soft); white-space:nowrap}
+.scorepill{
+  font-family:ui-monospace,Menlo,monospace; font-size:12.5px; font-weight:600;
+  padding:4px 11px; border-radius:20px; background:var(--accent-soft); color:var(--accent);
+  white-space:nowrap;
+}
+.tag{
+  display:inline-block; font-family:ui-monospace,Menlo,monospace; font-size:10.5px;
+  letter-spacing:.1em; text-transform:uppercase; padding:3px 9px; border-radius:5px;
+  color:#fff; margin-bottom:14px; font-weight:600;
+}
+.qtype{
+  font-family:ui-monospace,Menlo,monospace; font-size:10.5px; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--ink-soft); margin-bottom:14px;
+  display:inline-block; margin-left:8px;
+}
+.qcard{
+  background:var(--card); border:1px solid var(--line); border-radius:14px;
+  padding:26px 24px; margin-top:10px;
+}
+.qtext{font-size:21px; line-height:1.4; margin-bottom:20px; letter-spacing:-.005em}
+.opts{display:flex; flex-direction:column; gap:10px}
+.opt{
+  display:flex; gap:12px; align-items:flex-start; text-align:left; width:100%;
+  background:var(--paper); border:1.5px solid var(--line); border-radius:10px;
+  padding:14px 15px; cursor:pointer; font-family:inherit; font-size:16.5px; color:var(--ink);
+  transition:.12s; line-height:1.4;
+}
+.opt:hover:not(:disabled){border-color:var(--line-strong); background:#fff}
+.opt:disabled{cursor:default}
+.opt:focus-visible{outline:3px solid var(--accent); outline-offset:2px}
+.opt .key{
+  font-family:ui-monospace,Menlo,monospace; font-weight:700; font-size:13px;
+  width:24px; height:24px; border-radius:6px; background:var(--card); border:1px solid var(--line-strong);
+  display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px;
+}
+.opt.correct{border-color:var(--good); background:var(--good-bg)}
+.opt.correct .key{background:var(--good); color:#fff; border-color:var(--good)}
+.opt.wrong{border-color:var(--bad); background:var(--bad-bg)}
+.opt.wrong .key{background:var(--bad); color:#fff; border-color:var(--bad)}
+.opt.dim{opacity:.55}
+
+/* FIB */
+.fib-form{display:flex; gap:10px; flex-wrap:wrap}
+.fib-input{
+  flex:1; min-width:200px; font-family:inherit; font-size:17px; padding:13px 15px;
+  border:1.5px solid var(--line-strong); border-radius:10px; background:var(--paper); color:var(--ink);
+}
+.fib-input:focus{outline:none; border-color:var(--accent); background:#fff}
+.fib-input.correct{border-color:var(--good); background:var(--good-bg)}
+.fib-input.wrong{border-color:var(--bad); background:var(--bad-bg)}
+
+/* Feedback */
+.fb{margin-top:18px; padding:15px 16px; border-radius:10px; font-size:15px; line-height:1.5; display:none}
+.fb.show{display:block}
+.fb.ok{background:var(--good-bg); border:1px solid var(--good)}
+.fb.no{background:var(--bad-bg); border:1px solid var(--bad)}
+.fb .verdict{font-weight:700; margin-bottom:4px; display:flex; align-items:center; gap:7px}
+.fb.ok .verdict{color:var(--good)} .fb.no .verdict{color:var(--bad)}
+.fb .ans{font-size:14.5px}
+.fb .ans b{color:var(--ink)}
+.fb .exp{margin-top:8px; color:var(--ink-soft); font-size:14.5px}
+.nav-row{display:flex; justify-content:space-between; gap:10px; margin-top:20px; align-items:center}
+
+/* Results */
+.result-hero{text-align:center; padding:30px 0 10px}
+.result-score{font-size:64px; font-weight:700; letter-spacing:-.02em; line-height:1}
+.result-score .slash{color:var(--line-strong); font-weight:400}
+.result-pct{font-family:ui-monospace,Menlo,monospace; font-size:15px; color:var(--ink-soft); margin-top:8px}
+.result-grade{font-size:20px; margin-top:14px; font-weight:600}
+.review-item{
+  background:var(--card); border:1px solid var(--line); border-left:4px solid var(--sc,var(--line));
+  border-radius:9px; padding:14px 16px; margin-top:10px;
+}
+.review-item.miss{border-left-color:var(--bad)}
+.review-item.hit{border-left-color:var(--good)}
+.review-q{font-size:15.5px; margin-bottom:6px}
+.review-meta{font-size:13.5px; color:var(--ink-soft)}
+.review-meta b{color:var(--ink)}
+.rev-badge{font-family:ui-monospace,Menlo,monospace;font-size:11px;font-weight:700;
+  padding:2px 8px;border-radius:5px;margin-right:8px}
+.rev-badge.hit{background:var(--good-bg);color:var(--good)}
+.rev-badge.miss{background:var(--bad-bg);color:var(--bad)}
+.filter-row{display:flex;gap:8px;margin:20px 0 4px;flex-wrap:wrap}
+
+footer.foot{
+  margin-top:44px; padding-top:18px; border-top:1px solid var(--line);
+  font-size:12.5px; color:var(--ink-soft); font-family:ui-monospace,Menlo,monospace;
+  letter-spacing:.02em; text-align:center;
+}
+.hide{display:none !important}
+.kbd-hint{font-family:ui-monospace,Menlo,monospace;font-size:11.5px;color:var(--ink-soft);margin-top:16px;text-align:center}
+.kbd-hint kbd{background:var(--card);border:1px solid var(--line-strong);border-radius:4px;padding:1px 6px;font-size:11px}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<script>
+// Auto-generated combined question bank — balanced MC answers
+window.QB={};
+window.QB.newtonian=[{"t":"mc","q":"Newton's First Law is also known as the law of:","o":["Inertia","Gravitation","Acceleration","Reciprocal action"],"a":0,"e":"The First Law (an object at rest stays at rest, an object in motion stays in motion unless acted on by a net external force) is the law of inertia."},{"t":"mc","q":"Which equation states Newton's Second Law?","o":["W = m·g","F = m·a","F1 = F2","p = F/A"],"a":1,"e":"Newton's Second Law: Force equals mass times acceleration (F = ma)."},{"t":"mc","q":"\"For every action there is an equal and opposite reaction\" describes which of Newton's laws?","o":["First Law","Second Law","Third Law","Zeroth Law"],"a":2,"e":"The Third Law is the law of reciprocal action — equal and opposite reactions."},{"t":"mc","q":"Which of the following is a SCALAR quantity?","o":["Acceleration","Displacement","Velocity","Speed"],"a":3,"e":"Speed has magnitude only. Velocity, displacement, and acceleration are vectors (magnitude AND direction)."},{"t":"mc","q":"Which of the following is a VECTOR quantity?","o":["Weight","Mass","Distance","Temperature"],"a":0,"e":"Weight is a vector (gravitational force with direction toward earth's center). Mass, distance, and temperature are scalars."},{"t":"mc","q":"A patient's mass is documented as 70 kg. This value represents the patient's:","o":["Force","Mass","Weight","Gravitational pull"],"a":1,"e":"Kilograms measure mass — the amount of matter, unchanging anywhere in the universe. Weight (a force) is measured in Newtons."},{"t":"mc","q":"The SI unit of force is the:","o":["Joule","Pascal","Newton","Watt"],"a":2,"e":"Force is measured in Newtons (N), equivalent to kg·m/s²."},{"t":"mc","q":"The SI unit of pressure is the:","o":["Watt","Newton","Joule","Pascal"],"a":3,"e":"Pressure is measured in Pascals (Pa), equal to N/m². Because a Pa is small, kPa is often used."},{"t":"mc","q":"Which is the WEAKEST of the four fundamental forces?","o":["Gravitational","Weak nuclear","Electromagnetic","Strong nuclear"],"a":0,"e":"Order strongest→weakest: strong nuclear, electromagnetic, weak nuclear, gravitational (weakest)."},{"t":"mc","q":"Velocity is best defined as:","o":["Distance over time","Displacement over time","Speed with no direction","The total path length traveled"],"a":1,"e":"Velocity is displacement (change in position, a vector) over change in time. Speed is distance over time (scalar)."},{"t":"mc","q":"Acceleration is defined as the change in ___ over change in time.","o":["Distance","Force","Velocity","Displacement"],"a":2,"e":"Acceleration = Δvelocity / Δtime; SI unit m/s². It is a vector."},{"t":"mc","q":"What class of lever is a laryngoscope?","o":["Second class","First class","Fourth class","Third class"],"a":3,"e":"A laryngoscope acts as a 3rd class lever, which is why alignment and head positioning are so important."},{"t":"mc","q":"Weight is calculated as:","o":["Mass × gravity","Mass × acceleration ÷ area","Force × distance","Mass ÷ gravity"],"a":0,"e":"Weight = mass × gravity (W = mg). It is the gravitational force on an object's mass."},{"t":"mc","q":"The magnitude of gravity at or near the earth's surface is approximately:","o":["1.8 m/s²","9.8 m/s²","6.02 m/s²","32 m/s²"],"a":1,"e":"Gravitational acceleration near earth's surface ≈ 9.8 m/s²."},{"t":"mc","q":"An object with more mass has:","o":["Constant velocity","Less inertia","More inertia","No inertia"],"a":2,"e":"Mass is an object's tendency to resist changes in state (inertia). More mass = more inertia."},{"t":"mc","q":"Which instrument measures ABSOLUTE (actual) pressure?","o":["Bourdon gauge","Manometer","Sphygmomanometer","Barometer"],"a":3,"e":"A barometer measures absolute/actual atmospheric pressure. Manometers and Bourdon gauges measure gauge pressure."},{"t":"mc","q":"Manometers and Bourdon gauges measure:","o":["Gauge pressure","Vapor pressure","Partial pressure","Absolute pressure"],"a":0,"e":"Both measure gauge pressure — pressure of a system above or below atmospheric pressure."},{"t":"mc","q":"One atmosphere supports a column of mercury how many mm high at sea level?","o":["660 mm","760 mm","800 mm","714 mm"],"a":1,"e":"1 atm = the pressure needed to support a 760 mm column of mercury at sea level."},{"t":"mc","q":"Total pressure in a system equals:","o":["Atmospheric pressure ÷ gauge pressure","Gauge pressure − atmospheric pressure","Gauge pressure + atmospheric pressure","Absolute pressure − gauge pressure"],"a":2,"e":"P total = P gauge + P atmosphere. Example: 5 psi + 14.6 psi = 19.6 psi."},{"t":"mc","q":"A needle produces greater pressure than a fingertip applying the same force because the needle has:","o":["Higher mass","Greater contact area","More velocity","Smaller contact area"],"a":3,"e":"Pressure = force/area. Smaller area (needle) = much greater pressure for the same force."},{"t":"mc","q":"A Bourdon gauge is best described as:","o":["An aneroid (no-liquid) gauge","A liquid-filled manometer","A vacuum-sealed tube","A mercury barometer"],"a":0,"e":"A Bourdon gauge is an aneroid (without liquid) gauge; its tube uncoils in proportion to pressure."},{"t":"mc","q":"The SI base unit for thermodynamic temperature is the:","o":["Fahrenheit","Kelvin","Celsius","Joule"],"a":1,"e":"Kelvin (K) is the SI base unit for thermodynamic temperature."},{"t":"mc","q":"In a manometer, the top end is:","o":["Closed to create a vacuum","Filled with gas","Open to the atmosphere","Sealed with mercury"],"a":2,"e":"A manometer's top end is open to atmosphere; it measures the pressure difference between a system and atmosphere (gauge pressure)."},{"t":"mc","q":"Automated NIBP (non-invasive blood pressure) devices most commonly work by:","o":["Direct arterial cannulation","Auscultating Korotkoff sounds","Doppler flow","Oscillometry"],"a":3,"e":"NIBP uses oscillometry — oscillations from arterial pulsation; MAP is derived from maximal oscillations."},{"t":"mc","q":"If weight is a vector, its direction is:","o":["Toward the center of the earth","Random","Upward","Horizontal"],"a":0,"e":"Weight points downward — toward the center of the earth (direction of gravity)."},{"t":"mc","q":"Which SI derived unit is defined as N·m?","o":["Pascal","Joule","Watt","Hertz"],"a":1,"e":"The joule (energy) = N·m. The watt = J/s, the pascal = N/m²."},{"t":"mc","q":"Forces are required to:","o":["Keep an object at rest","Keep an object moving at constant velocity","Change an object's state of motion","Maintain inertia"],"a":2,"e":"Per the First Law, no force is needed to keep an object moving or at rest — force is required only to CHANGE its state of motion."},{"t":"mc","q":"A sphygmomanometer measures blood pressure using a mercury manometer connected to a(n):","o":["Vacuum chamber","Bourdon tube","Arterial line","Inflatable cuff"],"a":3,"e":"A manual sphygmomanometer uses an Hg-filled manometer connected to an inflatable cuff, paired with auscultation of Korotkoff sounds."},{"t":"mc","q":"Mass differs from weight because mass:","o":["Will not change anywhere in the universe","Changes with location","Is measured in Newtons","Can be zero in space"],"a":0,"e":"Mass is constant everywhere and cannot be zero (law of conservation of mass). Weight can be zero (e.g., in space)."},{"t":"fib","q":"Newton's First Law is the law of ________, an object's tendency to resist changes in its state of motion.","a":["inertia"],"e":"Inertia — resistance to change in motion — is related to mass. More mass = more inertia."},{"t":"fib","q":"Force equals mass times ________ (F = ma).","a":["acceleration"],"e":"Newton's Second Law: F = ma."},{"t":"fib","q":"A quantity that has magnitude only is called a ________ quantity.","a":["scalar"],"e":"Scalars (speed, mass, distance, energy, temperature) have magnitude only."},{"t":"fib","q":"A quantity requiring both magnitude and direction is called a ________ quantity.","a":["vector"],"e":"Vectors (velocity, weight, force, acceleration, momentum) need a point of reference/direction."},{"t":"fib","q":"________ is the amount of matter in an object and does not change anywhere in the universe.","a":["mass"],"e":"Mass (kg) is the amount of matter, constant everywhere."},{"t":"fib","q":"________ is the gravitational force exerted on an object's mass and is measured in Newtons.","a":["weight"],"e":"Weight = mass × gravity; measured in Newtons."},{"t":"fib","q":"Velocity is ________ over change in time and is a vector.","a":["displacement"],"e":"Velocity = Δdisplacement / Δtime."},{"t":"fib","q":"Speed is ________ over change in time and is a scalar.","a":["distance"],"e":"Speed = Δdistance / Δtime; no direction."},{"t":"fib","q":"A barometer measures ________ pressure (the actual pressure).","a":["absolute"],"e":"Barometers read absolute pressure; manometers/Bourdon gauges read gauge pressure."},{"t":"fib","q":"The weakest of the four fundamental forces is ________.","a":["gravity","gravitational","gravitation"],"e":"Gravity is the weakest of the four fundamental forces."},{"t":"fib","q":"A laryngoscope functions as a ________ class lever.","a":["third","3rd","3"],"e":"3rd class lever — hence the importance of positioning/alignment."},{"t":"fib","q":"The magnitude of gravitational acceleration near the earth's surface is about ________ m/s².","a":["9.8","9.81"],"e":"g ≈ 9.8 m/s²."},{"t":"fib","q":"Acceleration is the change in ________ over change in time.","a":["velocity"],"e":"a = Δvelocity / Δtime."},{"t":"fib","q":"1 atm supports a mercury column ________ mm high at sea level.","a":["760"],"e":"1 atm = 760 mmHg column at sea level."},{"t":"fib","q":"Total pressure = gauge pressure + ________ pressure.","a":["atmospheric","atmosphere"],"e":"P total = P gauge + P atmosphere."},{"t":"fib","q":"The SI unit of pressure is the ________.","a":["pascal","pascals","pa"],"e":"Pressure is measured in pascals (N/m²)."},{"t":"fib","q":"Automated NIBP monitors derive blood pressure using ________, based on oscillations from arterial pulsation.","a":["oscillometry"],"e":"Oscillometry underlies NIBP measurement."}];
+window.QB.gaslaws=[{"t":"mc","q":"Boyle's Law states that at constant temperature, gas volume is:","o":["Inversely related to pressure","Independent of pressure","Directly related to pressure","Directly related to temperature"],"a":0,"e":"Boyle's Law: volume is inversely related to pressure (P₁V₁ = P₂V₂) with temperature and amount constant."},{"t":"mc","q":"Charles' Law states that at constant pressure, gas volume is:","o":["Independent of temperature","Directly related to temperature","Inversely related to pressure","Inversely related to temperature"],"a":1,"e":"Charles' Law: volume is directly related to absolute temperature (V₁/T₁ = V₂/T₂)."},{"t":"mc","q":"Gay-Lussac's Law describes the relationship between:","o":["Volume and pressure","Volume and temperature","Pressure and temperature","Volume and moles"],"a":2,"e":"Gay-Lussac's Law: pressure is directly related to temperature (P₁/T₁ = P₂/T₂) at constant volume and amount."},{"t":"mc","q":"Squeezing an ambu bag to ventilate a patient is an example of whose law?","o":["Dalton's","Henry's","Charles'","Boyle's"],"a":3,"e":"Boyle's Law — decreasing volume increases pressure, driving gas into the patient."},{"t":"mc","q":"Avogadro's Law states that gas volume is directly proportional to the:","o":["Number of gas molecules","Molecular weight","Temperature","Pressure"],"a":0,"e":"Avogadro's Law: volume ∝ number of molecules (moles) at constant temperature and pressure."},{"t":"mc","q":"One mole of any gas contains how many atoms/particles?","o":["4.02 × 10³⁰","6.02 × 10²³","3.01 × 10²³","8.01 × 10³⁰"],"a":1,"e":"Avogadro's number = 6.02 × 10²³ particles per mole."},{"t":"mc","q":"The ideal gas law is expressed as:","o":["P₁V₁ = P₂V₂","P = F/A","PV = nRT","V₁/T₁ = V₂/T₂"],"a":2,"e":"PV = nRT: Pressure × Volume = moles × ideal gas constant × absolute Temperature (K)."},{"t":"mc","q":"In PV = nRT, the value of R (universal gas constant) is:","o":["6.02 × 10²³","760 mmHg","9.8 m/s²","0.0821 atm·L/mol·K"],"a":3,"e":"R = 0.0821 (L·atm)/(K·mol)."},{"t":"mc","q":"In the ideal gas law, temperature must be measured in:","o":["Kelvin","Any scale","Fahrenheit","Celsius"],"a":0,"e":"Absolute temperature in Kelvin is required for gas law calculations."},{"t":"mc","q":"Dalton's Law states that the total pressure of a gas mixture equals:","o":["The product of the partial pressures","The sum of the partial pressures","The largest partial pressure","The average of the partial pressures"],"a":1,"e":"Dalton's Law: P total = P₁ + P₂ + ... + Pₙ (sum of partial pressures)."},{"t":"mc","q":"Henry's Law states that the amount of gas dissolving into solution is directly proportional to its:","o":["Viscosity","Molecular weight","Partial pressure","Temperature"],"a":2,"e":"Henry's Law: dissolved gas concentration = partial pressure × solubility (at constant temperature)."},{"t":"mc","q":"According to Henry's Law, as temperature INCREASES, gas solubility:","o":["Increases","Doubles","Stays constant","Decreases"],"a":3,"e":"Higher temperature = lower gas solubility (the gas wants to stay a gas)."},{"t":"mc","q":"According to Henry's Law, as temperature DECREASES, gas solubility:","o":["Increases","Becomes zero","Stays constant","Decreases"],"a":0,"e":"Lower temperature = higher gas solubility (e.g., more anesthetic dissolves in blood in hypothermic patients)."},{"t":"mc","q":"Graham's Law states that gas effusion speed is inversely proportional to the:","o":["Molecular weight squared","Square root of molecular weight","Partial pressure","Temperature"],"a":1,"e":"Graham's Law: rate ∝ 1/√(molecular weight). Lighter gases effuse faster."},{"t":"mc","q":"Fick's Law: gas diffusion across a semipermeable membrane is DIRECTLY proportional to all EXCEPT:","o":["Solubility","Surface area","Membrane thickness","Partial pressure gradient"],"a":2,"e":"Diffusion is directly proportional to partial pressure, solubility, and surface area — but INVERSELY proportional to membrane thickness and molecular weight."},{"t":"mc","q":"Fick's Law: gas diffusion is INDIRECTLY (inversely) proportional to:","o":["Solubility","Surface area","Partial pressure","Molecular weight and membrane thickness"],"a":3,"e":"Diffusion is inversely proportional to molecular weight/size and membrane thickness."},{"t":"mc","q":"Gas diffusion across a semipermeable membrane is indirectly related to its:","o":["Molecular weight/size","Partial pressure","Surface area","Solubility"],"a":0,"e":"Heavier/larger molecules diffuse more slowly — inverse relationship."},{"t":"mc","q":"Diffusion is defined as the net movement of molecules from an area of:","o":["High to high concentration","High to low concentration","Equal concentrations","Low to high concentration"],"a":1,"e":"Diffusion: passive movement down a concentration gradient (high → low) until equilibrium."},{"t":"mc","q":"The vapor pressure of a gas is the pressure at which gas-phase molecules are in equilibrium with:","o":["Other gas molecules","Solid-phase molecules","Liquid-phase molecules","Atmospheric molecules"],"a":2,"e":"Vapor pressure = the equilibrium between molecules in the gas phase and the liquid phase."},{"t":"mc","q":"Which term describes the pressure at which molecules in the gas phase are in equilibrium with molecules in the liquid phase?","o":["Solubility","Partial pressure","Kinetic energy","Vapor pressure"],"a":3,"e":"That is the definition of vapor pressure."},{"t":"mc","q":"According to Gay-Lussac's Law, heating an oxygen tank would:","o":["Increase its pressure (risk of explosion)","Decrease its pressure","Have no effect on pressure","Decrease its temperature"],"a":0,"e":"Pressure and temperature are directly related; heating raises the tank pressure — an explosion risk."},{"t":"mc","q":"The molecular weight of O₂ (diatomic) is approximately:","o":["16 g","32 g","6.02 g","22 g"],"a":1,"e":"Atomic O = 16 g; O₂ (diatomic) = 32 g. One mole of O₂ = 6.02 × 10²³ molecules = 32 g."},{"t":"mc","q":"Which of the following is an assumption of the IDEAL gas law?","o":["Kinetic energy is lost in collisions","Gas molecules attract each other","Gas molecules exert no force unless they collide","Molecules have significant volume"],"a":2,"e":"Ideal gas assumptions: molecules have no volume, exert no force except during (elastic) collisions, lose no KE, move randomly, and temperature depends only on average KE."},{"t":"mc","q":"Compared to an ideal gas, a REAL gas differs because real gas particles:","o":["Undergo perfectly elastic collisions","Never interact","Have no volume","Have volume and intermolecular forces"],"a":3,"e":"Real gases have particle volume, lose energy in collisions, and have intermolecular forces — deviations greatest at high pressure and low temperature."},{"t":"mc","q":"Relative humidity of 100% means the air:","o":["Holds the maximum water vapor at that temperature","Contains no water vapor","Has reached its dew point solubility limit only above freezing","Is at absolute zero"],"a":0,"e":"100% relative humidity = saturation — the maximum water vapor the air can hold at that temperature."},{"t":"mc","q":"The dew point is the temperature at which:","o":["Gas solubility is maximal","Water vapor exceeds its solubility in air and forms dew","Ice melts","Water boils"],"a":1,"e":"Dew point = temperature at which water content exceeds its solubility in air, forming dew/condensation."},{"t":"mc","q":"Osmosis is the movement of free water across a membrane that is:","o":["Impermeable to water","Nonpermeable","Semipermeable (only solvent equilibrates)","Fully permeable"],"a":2,"e":"Osmosis occurs across a semipermeable membrane where only solvent (water) equilibrates."},{"t":"mc","q":"Oncotic pressure specifically refers to osmotic pressure exerted by:","o":["Atmospheric pressure","Dissolved gases","Red blood cells","Plasma proteins and electrolytes in capillaries"],"a":3,"e":"Oncotic pressure = osmotic pressure from plasma proteins and electrolytes in capillaries."},{"t":"mc","q":"The combined gas law combines Boyle's, Charles', and which other law?","o":["Gay-Lussac's","Dalton's","Graham's","Henry's"],"a":0,"e":"Combined gas law = Boyle's + Charles' + Gay-Lussac's: P₁V₁/T₁ = P₂V₂/T₂."},{"t":"mc","q":"'Like dissolves like' refers to the principle that:","o":["Gases dissolve only in gases","Polar substances dissolve in polar solvents","All substances dissolve equally","Nonpolar dissolves in polar"],"a":1,"e":"Polar dissolves polar, nonpolar dissolves nonpolar — the basis of solubility."},{"t":"fib","q":"________ Law states volume is inversely related to pressure at constant temperature.","a":["boyle's","boyle","boyles"],"e":"Boyle's Law: P₁V₁ = P₂V₂."},{"t":"fib","q":"________ Law states volume and temperature of a gas are directly related.","a":["charles'","charles","charles law","charle's"],"e":"Charles' Law: V₁/T₁ = V₂/T₂."},{"t":"fib","q":"________ Law states pressure is directly related to temperature (constant volume).","a":["gay-lussac's","gay lussac's","gay-lussac","gay lussac"],"e":"Gay-Lussac's Law: P₁/T₁ = P₂/T₂."},{"t":"fib","q":"The ideal gas law equation is ________.","a":["pv=nrt","pv = nrt"],"e":"PV = nRT."},{"t":"fib","q":"One mole of any gas contains ________ particles (Avogadro's number).","a":["6.02 x 10^23","6.02x10^23","6.02 × 10²³","6.02e23","6.02 x 10 23","6.022 x 10^23"],"e":"Avogadro's number = 6.02 × 10²³."},{"t":"fib","q":"________ Law states the total pressure of a gas mixture is the sum of the partial pressures.","a":["dalton's","dalton","daltons"],"e":"Dalton's Law of partial pressures."},{"t":"fib","q":"According to ________ Law, the amount of gas dissolving into solution is directly proportional to its partial pressure.","a":["henry's","henry","henrys"],"e":"Henry's Law."},{"t":"fib","q":"________ Law of effusion states effusion speed is inversely proportional to the square root of molecular weight.","a":["graham's","graham","grahams"],"e":"Graham's Law."},{"t":"fib","q":"________ Law of diffusion describes gas diffusion across a semipermeable membrane.","a":["fick's","fick","ficks"],"e":"Fick's Law of diffusion."},{"t":"fib","q":"________ is the pressure at which molecules in the gas phase are in equilibrium with molecules in the liquid phase.","a":["vapor pressure"],"e":"Vapor pressure."},{"t":"fib","q":"Diffusion is the movement of molecules from an area of high to ________ concentration.","a":["low","lower"],"e":"High to low concentration, down a gradient, until equilibrium."},{"t":"fib","q":"As gas volume increases (constant temperature), pressure ________.","a":["decreases"],"e":"Boyle's Law inverse relationship — volume up, pressure down."},{"t":"fib","q":"In the ideal gas law, temperature is measured in ________.","a":["kelvin","kelvins","k"],"e":"Absolute temperature in Kelvin."},{"t":"fib","q":"The universal gas constant R equals ________ (L·atm)/(K·mol).","a":["0.0821"],"e":"R = 0.0821."},{"t":"fib","q":"Avogadro's Law: gas volume is directly proportional to the number of gas ________.","a":["molecules","moles"],"e":"Volume ∝ number of molecules (moles)."},{"t":"fib","q":"As temperature increases, gas solubility ________ (Henry's Law).","a":["decreases"],"e":"Higher temperature lowers gas solubility."},{"t":"fib","q":"The molecular weight of diatomic O₂ is ________ grams.","a":["32"],"e":"O₂ = 32 g (16 g × 2)."},{"t":"fib","q":"100% relative humidity is also called ________, the maximum water vapor air can hold at a given temperature.","a":["saturation"],"e":"Saturation = 100% relative humidity."}];
+window.QB.kinetics=[{"t":"mc","q":"The SI unit for energy is the:","o":["Joule","Newton","Watt","Pascal"],"a":0,"e":"Energy is measured in joules (J)."},{"t":"mc","q":"A calorie is defined as the energy to raise the temperature of 1 g of water:","o":["From 0°C to 1°C","From 14.5°C to 15.5°C","From liquid to gas","By 10°C"],"a":1,"e":"1 calorie raises 1 g of H₂O from 14.5°C to 15.5°C (1°C). 1 cal = 4.184 J."},{"t":"mc","q":"1 calorie equals how many joules?","o":["1000 J","760 J","4.184 J","1.0 J"],"a":2,"e":"1 cal = 4.184 J. A food Calorie (kilocalorie) = 1000 cal."},{"t":"mc","q":"Kinetic energy depends on the mass of the object and its:","o":["Charge","Temperature","Position","Speed"],"a":3,"e":"KE depends on mass and speed achieved. It is the energy of motion."},{"t":"mc","q":"Work is defined as force applied to an object that:","o":["Displaces it in the same direction","Changes its temperature","Increases its mass","Heats the surroundings"],"a":0,"e":"Work = energy transferred when a force displaces an object in the same direction (W = F·d)."},{"t":"mc","q":"Power is best defined as:","o":["Stored energy","The rate at which work is done","Force times distance","Mass times acceleration"],"a":1,"e":"Power = rate at which work is done (energy expended per unit time); P = W/t."},{"t":"mc","q":"A system doing work at 5 joules per second is described by its:","o":["Heat","Force","Power","Work"],"a":2,"e":"Joules per second (J/s) = watts = power."},{"t":"mc","q":"Potential energy is best described as:","o":["Heat energy only","Energy of motion","Random molecular motion","Stored energy due to position or composition"],"a":3,"e":"Potential energy = stored energy from position or chemical composition (another name is 'stored' energy)."},{"t":"mc","q":"Gravitational potential energy is calculated as:","o":["mgh (mass × gravity × height)","Q − W","½mv²","F × d"],"a":0,"e":"GPE = mass × gravity (9.8 m/s²) × height = mgh."},{"t":"mc","q":"Internal energy (U) of a system is the sum of its:","o":["Work and heat","Kinetic, potential, and thermal energies","Kinetic energy only","Mass and gravity"],"a":1,"e":"Internal energy = sum total energy of a system: kinetic + potential + thermal energies."},{"t":"mc","q":"Entropy is a measure of:","o":["Kinetic energy","Pressure","Randomness, chaos, or disorder","Heat capacity"],"a":2,"e":"Entropy measures randomness/disorder. Systems increase in entropy as particles become more mixed/mobile."},{"t":"mc","q":"A material that returns to its original shape after force is released demonstrates:","o":["Adiabatic behavior","Plasticity","Entropy","Elasticity"],"a":3,"e":"Elasticity: energy used to change shape is equally output when released (e.g., a spring, Frank-Starling relationship)."},{"t":"mc","q":"A material that does NOT return to its original shape after deformation demonstrates:","o":["Plasticity","Enthalpy","Equilibrium","Elasticity"],"a":0,"e":"Plasticity: energy used to deform is NOT equal to output; it does not return to original state (e.g., heart failure)."},{"t":"mc","q":"The Zeroth Law of Thermodynamics states that two bodies each in thermal equilibrium with a third body:","o":["Cannot reach equilibrium","Are in thermal equilibrium with each other","Transfer heat rapidly","Have different temperatures"],"a":1,"e":"Zeroth Law: if A and B are each in equilibrium with C, then A and B are in equilibrium with each other (same temperature)."},{"t":"mc","q":"The First Law of Thermodynamics is expressed as:","o":["S = Q/T","PV = nRT","ΔE = Q − W","F = ma"],"a":2,"e":"First Law: ΔE = Q − W. Net change in energy = heat added minus work done by the system."},{"t":"mc","q":"The First Law of Thermodynamics essentially states that energy in an isolated system is:","o":["Always increasing","Zero","Always decreasing","Conserved (constant)"],"a":3,"e":"Energy is conserved — the total energy in an isolated system is constant."},{"t":"mc","q":"The Second Law of Thermodynamics states that in spontaneous processes, the entropy of the universe:","o":["Increases","Stays constant","Decreases","Reaches zero"],"a":0,"e":"Second Law (entropy law): entropy of the universe increases over time until equilibrium."},{"t":"mc","q":"The Third Law of Thermodynamics states that entropy of a pure crystalline substance is zero at:","o":["Boiling point","Absolute zero","Room temperature","100°C"],"a":1,"e":"Third Law: entropy of a perfectly pure crystal is zero at absolute zero (0 K). No system can actually reach absolute zero."},{"t":"mc","q":"In the First Law, energy flowing OUT of a system is assigned which sign?","o":["Undefined","Zero","Negative","Positive"],"a":2,"e":"Energy flowing out (−Q) is negative; energy flowing in (+Q) is positive."},{"t":"mc","q":"Thermal energy is best defined as:","o":["Stored chemical energy","The flow of heat between objects","An arbitrary measure of hotness","Energy within a system responsible for its temperature"],"a":3,"e":"Thermal energy = energy contained within a system responsible for its temperature."},{"t":"mc","q":"Heat is best defined as:","o":["The flow of thermal energy between objects due to temperature differences","Stored potential energy","Energy contained within a system","A measure of disorder"],"a":0,"e":"Heat = the flow/transfer of thermal energy between objects because of temperature differences."},{"t":"mc","q":"The Celsius-to-Kelvin conversion is:","o":["K = (°C × 9/5) + 32","K = °C + 273","K = °C × 273","K = °C − 273"],"a":1,"e":"K = °C + 273."},{"t":"mc","q":"Heat capacity (C) is the heat required to change an object's:","o":["Volume","Pressure","Temperature","Mass"],"a":2,"e":"Heat capacity = heat transferred to/from an object to change its temperature; SI units J/K."},{"t":"mc","q":"Specific heat is the energy required to raise the temperature of:","o":["1 mole of a substance by 1 K","1 L of gas by 1 atm","Any mass by 10°C","1 g of a substance by 1°C"],"a":3,"e":"Specific heat = energy to raise 1 g of a substance by 1°C (SI units J/(kg·K))."},{"t":"mc","q":"The MOST significant mechanism of heat loss in the anesthetized adult is:","o":["Radiation","Convection","Conduction","Evaporation"],"a":0,"e":"Radiation is the most significant mechanism of heat loss — greatest in areas of highest blood flow (e.g., the head)."},{"t":"mc","q":"Heat transfer by direct contact between objects is called:","o":["Convection","Conduction","Evaporation","Radiation"],"a":1,"e":"Conduction = direct contact exchange of heat from higher to lower concentration."},{"t":"mc","q":"Heat transfer via air currents created by warm molecules rising is:","o":["Radiation","Conduction","Convection","Evaporation"],"a":2,"e":"Convection: heat creates air currents; warm (higher-energy) molecules rise and cool molecules replace them."},{"t":"mc","q":"During induction of general anesthesia, redistribution hypothermia occurs primarily because anesthesia causes:","o":["Shivering","Increased metabolism","Vasoconstriction","Vasodilation"],"a":3,"e":"Anesthesia inhibits tonic vasoconstriction → vasodilation → core-to-peripheral redistribution of heat."},{"t":"mc","q":"Vaporization (liquid → gas) is a(n) ________ process with a cooling effect.","o":["Endothermic","Exothermic","Isothermal","Adiabatic"],"a":0,"e":"Vaporization is endothermic — molecules absorb energy (heat of vaporization) to escape the liquid; it produces a cooling effect."},{"t":"mc","q":"Condensation (gas → liquid) is a(n) ________ process with a heating effect.","o":["Adiabatic","Exothermic","Isobaric","Endothermic"],"a":1,"e":"Condensation is exothermic — molecules release energy as they enter the liquid phase, producing heat."},{"t":"mc","q":"The boiling point of a liquid is the temperature at which its vapor pressure equals:","o":["Zero","Partial pressure of oxygen","Atmospheric (surrounding) pressure","Critical pressure"],"a":2,"e":"Boiling point = temperature where vapor pressure equals the surrounding/atmospheric pressure; bubbles form and rise."},{"t":"mc","q":"As atmospheric pressure INCREASES, the boiling point of a liquid:","o":["Becomes zero","Stays the same","Decreases","Increases"],"a":3,"e":"Higher ambient pressure requires a higher temperature to reach boiling — boiling point increases."},{"t":"mc","q":"Increasing temperature has what effect on vapor pressure?","o":["Increases it","Makes it zero","No effect","Decreases it"],"a":0,"e":"Increasing temperature increases kinetic energy and vapor pressure (greater tendency to evaporate)."},{"t":"mc","q":"The critical temperature is defined as:","o":["Absolute zero","The highest temperature at which a gas can exist as a liquid","The boiling point at 1 atm","The temperature at which a liquid freezes"],"a":1,"e":"Critical temperature = the highest temperature at which a vapor can be liquefied; above it, no pressure will liquefy the gas."},{"t":"mc","q":"At the triple point of a phase diagram:","o":["Only gas exists","Only liquid exists","All three phases coexist in equilibrium","The substance becomes supercritical"],"a":2,"e":"At the triple point, solid, liquid, and gas phases coexist in equilibrium."},{"t":"mc","q":"Latent heat of vaporization is the energy to convert 1 g of liquid to vapor:","o":["With a large temperature rise","Only at absolute zero","During condensation","Without a temperature change in the liquid"],"a":3,"e":"Latent heat of vaporization = calories to convert 1 g liquid to vapor with NO temperature change in the liquid."},{"t":"mc","q":"An adiabatic process is one that occurs:","o":["Without transfer of heat or matter","With maximum heat transfer","Only in open systems","At constant temperature"],"a":0,"e":"Adiabatic = no transfer of heat/energy between system and surroundings (must be a closed system); occurs too rapidly for heat exchange."},{"t":"mc","q":"An isothermal process is one in which:","o":["Pressure is constant","Temperature remains constant (ΔT = 0)","No heat is transferred","Volume is zero"],"a":1,"e":"Isothermal: temperature stays constant (ΔT = 0), with heat exchange allowed."},{"t":"mc","q":"The Joule-Thompson effect describes the temperature change when a high-pressure gas:","o":["Is compressed slowly","Condenses","Suddenly expands without work or heat transfer","Is heated"],"a":2,"e":"Joule-Thompson effect: temperature change accompanying rapid expansion of a gas without work or heat transfer — how gases are liquefied."},{"t":"mc","q":"Adiabatic heating occurs when a gas is:","o":["Held at constant volume","Allowed to expand","Cooled slowly","Compressed (work done on it by surroundings)"],"a":3,"e":"Adiabatic heating: pressure increased by work done on the gas (e.g., piston compressing gas), raising its temperature."},{"t":"mc","q":"Which state of matter is compressible?","o":["Gas","Solid","Liquid","None of these"],"a":0,"e":"Gases are compressible; solids and liquids are not easily compressible."},{"t":"mc","q":"In kinetic molecular theory, gas molecules are described as having motion that is:","o":["Only vibrational","Constant and random","Slow and ordered","Fixed in a lattice"],"a":1,"e":"Gas molecules are in constant, random motion; essentially all of their energy is kinetic."},{"t":"mc","q":"For vaporizer construction, the desired material properties are:","o":["Low of both","High specific heat, low thermal conductivity","Low specific heat, high thermal conductivity","High specific heat, high conductivity"],"a":2,"e":"Desire low specific heat and high thermal conductivity (e.g., copper, stainless steel, bronze) to conduct heat to the liquid anesthetic."},{"t":"fib","q":"The SI unit for energy is the ________.","a":["joule","joules","j"],"e":"Energy is measured in joules."},{"t":"fib","q":"1 calorie = ________ joules.","a":["4.184","4.18"],"e":"1 cal = 4.184 J."},{"t":"fib","q":"________ energy is the energy an object has because of its motion.","a":["kinetic"],"e":"Kinetic energy = energy of motion."},{"t":"fib","q":"________ energy is stored energy due to position or chemical composition.","a":["potential"],"e":"Potential energy = stored energy."},{"t":"fib","q":"Gravitational potential energy = mass × gravity × ________ (mgh).","a":["height"],"e":"GPE = mgh."},{"t":"fib","q":"________ is a measure of randomness, chaos, or disorder in a system.","a":["entropy"],"e":"Entropy."},{"t":"fib","q":"The rate at which work is done is called ________.","a":["power"],"e":"Power = work/time; measured in watts (J/s)."},{"t":"fib","q":"The First Law of Thermodynamics is written ΔE = Q − ________.","a":["w","work"],"e":"ΔE = Q − W."},{"t":"fib","q":"The ________ Law of Thermodynamics states entropy of the universe increases in spontaneous processes.","a":["second","2nd","2"],"e":"Second Law (entropy law)."},{"t":"fib","q":"The ________ Law of Thermodynamics: two bodies each in equilibrium with a third are in equilibrium with each other.","a":["zeroth","0","zero"],"e":"Zeroth Law."},{"t":"fib","q":"The most significant mechanism of heat loss in the anesthetized adult is ________.","a":["radiation"],"e":"Radiation is the greatest heat-loss mechanism."},{"t":"fib","q":"Heat transfer by direct contact is called ________.","a":["conduction"],"e":"Conduction = direct contact heat exchange."},{"t":"fib","q":"Vaporization is an ________ process (absorbs heat, cooling effect).","a":["endothermic"],"e":"Vaporization is endothermic."},{"t":"fib","q":"Condensation is an ________ process (releases heat, heating effect).","a":["exothermic"],"e":"Condensation is exothermic."},{"t":"fib","q":"The ________ point is the temperature at which a liquid's vapor pressure equals atmospheric pressure.","a":["boiling"],"e":"Boiling point."},{"t":"fib","q":"The Celsius to Kelvin conversion is K = °C + ________.","a":["273"],"e":"K = °C + 273."},{"t":"fib","q":"A(n) ________ process occurs without transfer of heat or matter with the surroundings.","a":["adiabatic"],"e":"Adiabatic process."},{"t":"fib","q":"The ________ effect describes cooling of a high-pressure gas as it suddenly expands, used to liquefy gases.","a":["joule-thompson","joule thompson","joule-thomson","joule thomson"],"e":"Joule-Thompson effect."},{"t":"fib","q":"Specific heat is the heat needed to raise 1 g of a substance by 1 degree ________.","a":["celsius","c"],"e":"Specific heat: 1 g by 1°C."},{"t":"fib","q":"The gas state is the only common state of matter that is ________.","a":["compressible"],"e":"Gases are compressible."}];
+window.QB.fluids=[{"t":"mc","q":"A fluid is defined by its response to:","o":["Stress (external pressure)","Mass","Temperature","Gravity"],"a":0,"e":"A fluid has no fixed shape and yields to external pressure ('stress') — includes liquids, gases, and vapors."},{"t":"mc","q":"Friction within a fluid is proportional to its:","o":["Density","Viscosity","Temperature","Volume"],"a":1,"e":"Fluid friction (resistance to flow) is proportional to viscosity."},{"t":"mc","q":"Which is NOT one of the three types of flow?","o":["Transitional","Laminar","Compressional","Turbulent"],"a":2,"e":"The three flow types are laminar, turbulent, and transitional."},{"t":"mc","q":"In laminar flow, fluid molecules move:","o":["Only at the walls","Chaotically with eddies","In random swirls","In parallel with no disruption"],"a":3,"e":"Laminar flow: molecules move in parallel with no disruption; the center moves fastest (e.g., terminal bronchioles)."},{"t":"mc","q":"Turbulent flow is characterized by:","o":["Chaotic, irregular flow with eddies","Constant velocity","No pressure change","Parallel streamlines"],"a":0,"e":"Turbulent flow is chaotic/irregular ('eddies') with rapid changes in pressure and velocity."},{"t":"mc","q":"Which law describes laminar flow through a tube?","o":["Bernoulli's","Poiseuille's","Ohm's","Laplace's"],"a":1,"e":"Poiseuille's Law describes laminar flow through a narrow tube."},{"t":"mc","q":"According to Poiseuille's Law, flow is DIRECTLY related to:","o":["Density and speed","Length and viscosity","Pressure and radius","Molecular weight"],"a":2,"e":"Poiseuille: flow is directly related to pressure gradient and radius (to the 4th power), and inversely related to length and viscosity."},{"t":"mc","q":"According to Poiseuille's Law, flow is INVERSELY related to:","o":["Cross-sectional area","Radius and pressure","Radius⁴","Length and viscosity"],"a":3,"e":"Flow is inversely proportional to tube length and fluid viscosity."},{"t":"mc","q":"Radius affects flow in Poiseuille's Law to which power?","o":["4th power","3rd power","2nd power","1st power"],"a":0,"e":"Flow is proportional to radius to the 4th power — small radius changes have a dramatic effect."},{"t":"mc","q":"For rapid IV fluid administration, Poiseuille's Law favors a catheter that is:","o":["Short and narrow","Short and large-bore","Long and large-bore","Long and narrow"],"a":1,"e":"Short length + large radius = highest flow rate (e.g., large-bore short IV)."},{"t":"mc","q":"Reynold's number is a dimensionless quantity used to predict whether flow will be:","o":["Fast or slow","Polar or nonpolar","Laminar or turbulent","Elastic or plastic"],"a":2,"e":"Reynold's number predicts laminar vs turbulent flow based on density, velocity, diameter, and viscosity."},{"t":"mc","q":"Reynold's number is DIRECTLY proportional to all EXCEPT:","o":["Velocity","Density","Diameter","Viscosity"],"a":3,"e":"Nᵣ is directly proportional to density, velocity, and diameter, but INVERSELY proportional to viscosity."},{"t":"mc","q":"Laminar flow generally occurs when Reynold's number is:","o":["< 2,000","2,000–4,000","> 4,000","Exactly 2,500"],"a":0,"e":"Nᵣ < 2,000 = laminar; 2,000–4,000 = transitional; > 4,000 = turbulent."},{"t":"mc","q":"Turbulent flow generally occurs when Reynold's number is:","o":["< 1,000","> 4,000","2,000–4,000","< 2,000"],"a":1,"e":"Turbulent flow when Nᵣ > 4,000."},{"t":"mc","q":"The Bernoulli effect states that as fluid velocity increases, pressure:","o":["Increases","Doubles","Decreases","Stays constant"],"a":2,"e":"Bernoulli: inverse relationship — increased velocity, decreased pressure at any given point."},{"t":"mc","q":"The Venturi effect uses increased velocity (and decreased pressure) to allow:","o":["Laminar flow only","Compression of gas","Heating of the fluid","Entrainment of air or fluid"],"a":3,"e":"Venturi: increased velocity → decreased pressure → entrainment of surrounding air or fluid (e.g., Venturi mask)."},{"t":"mc","q":"The Coanda effect describes the tendency of fluid to:","o":["Stick to and follow a surface after a constriction","Compress","Increase in temperature","Reverse direction"],"a":0,"e":"Coanda (wall attachment) effect: flow follows a surface due to attraction; can cause maldistribution at a bifurcation (e.g., wall-hugging regurgitant jet)."},{"t":"mc","q":"A Venturi mask entrains room air because the air jet creates a region of:","o":["No flow","Lower pressure than atmosphere","Equal pressure","Higher pressure than atmosphere"],"a":1,"e":"The high-speed jet has lower wall pressure than surrounding air, so atmospheric air is entrained."},{"t":"mc","q":"In the flow equation modeled on Ohm's Law, flow equals:","o":["Voltage × current","Resistance ÷ pressure","Pressure gradient ÷ resistance","Pressure gradient × resistance"],"a":2,"e":"Flow = pressure gradient ÷ resistance (analogous to current = voltage ÷ resistance)."},{"t":"mc","q":"In the hemodynamic analogy to Ohm's Law, 'current' corresponds to:","o":["Pressure difference","Resistance","Viscosity","Blood flow"],"a":3,"e":"Current = blood flow; voltage difference = pressure gradient; resistance = resistance to flow."},{"t":"mc","q":"Increasing the pressure gradient across a vessel will ________ flow.","o":["Increase","Decrease","Reverse","Not change"],"a":0,"e":"Flow ∝ pressure gradient. Increasing the gradient increases flow (with resistance constant)."},{"t":"mc","q":"Increasing resistance in a vessel will ________ flow.","o":["Not change","Decrease","Double","Increase"],"a":1,"e":"Flow is inversely related to resistance; increased resistance decreases flow. Changes in resistance are the primary mechanism regulating blood flow."},{"t":"mc","q":"Viscosity is best described as:","o":["The pressure gradient","The rate of flow","A fluid's internal resistance to flow","A fluid's density"],"a":2,"e":"Viscosity = internal resistance to flow from molecular interactions (e.g., honey is high-viscosity; water is low)."},{"t":"mc","q":"An IDEAL fluid is characterized by:","o":["Loss of energy to friction","High viscosity","Turbulent flow only","No loss of energy and no molecular interactions"],"a":3,"e":"An ideal fluid has no energy loss, no molecular interactions, and no interaction with the container."},{"t":"mc","q":"If an object's density is GREATER than the fluid it is placed in, the object will:","o":["Sink","Dissolve","Remain suspended","Float"],"a":0,"e":"Density greater than fluid → sink; less → float; equal → suspended (isobaric)."},{"t":"mc","q":"Baricity in spinal anesthesia is based on the drug's:","o":["Viscosity","Density (relative to CSF)","Molecular weight","Temperature"],"a":1,"e":"Baricity is based on density relative to CSF; also called specific gravity."},{"t":"mc","q":"Heliox reduces turbulent flow in large airways primarily by decreasing gas:","o":["Temperature","Viscosity","Density","Pressure"],"a":2,"e":"Heliox decreases density, lowering Reynold's number and reducing turbulent flow."},{"t":"mc","q":"Blood flow is normally mostly ________ flow.","o":["Turbulent","Transitional","Static","Laminar"],"a":3,"e":"Blood flow is mostly laminar; turbulence occurs at high-flow regions, branch points, and stenotic/narrowed vessels."},{"t":"mc","q":"Turbulent blood flow can generate:","o":["Sound waves (murmurs, bruits)","Laminar streamlines","Silence","Reduced perfusion pressure needs"],"a":0,"e":"Turbulence generates sound waves (murmurs, bruits) and increases the perfusion pressure required to drive flow."},{"t":"mc","q":"The Law of Laplace relates wall tension to:","o":["Velocity and flow","Pressure and radius","Mass and gravity","Density and viscosity"],"a":1,"e":"Law of Laplace: Wall Tension = Pressure × Radius (for a cylinder)."},{"t":"mc","q":"For a cylinder (e.g., blood vessel), wall tension is DIRECTLY proportional to:","o":["Wall thickness","Fluid density","Pressure and radius","Viscosity only"],"a":2,"e":"Wall tension = pressure × radius; directly proportional to both."},{"t":"mc","q":"As an aneurysm expands (increasing radius), the wall tension:","o":["Becomes zero","Decreases","Stays constant","Increases (higher rupture risk)"],"a":3,"e":"Larger radius → greater wall tension → increased rupture risk (Law of Laplace)."},{"t":"mc","q":"In the alveolus, which substance reduces surface tension to prevent collapse?","o":["Surfactant","Water","Fibrin","Mucus"],"a":0,"e":"Surfactant (made by alveolar type II cells) reduces surface tension, keeping alveoli open and preventing collapse."},{"t":"mc","q":"Per the Law of Laplace for a sphere, as alveolar radius DECREASES, the pressure required to keep it open:","o":["Decreases","Increases","Becomes negative","Stays the same"],"a":1,"e":"Smaller sphere radius → higher pressure needed to keep it open; surfactant equalizes this to prevent small alveoli from emptying into larger ones."},{"t":"mc","q":"Surface tension results from liquid surface molecules experiencing:","o":["No net force","Repulsion","A net inward force creating 'tension'","A net outward force"],"a":2,"e":"Surface molecules experience a net inward force, creating surface 'tension'; water has high surface tension."},{"t":"mc","q":"'Like dissolves like' means polar compounds dissolve best in:","o":["Gases only","Any solvent","Nonpolar solvents","Other polar compounds"],"a":3,"e":"Polar dissolves polar; nonpolar dissolves nonpolar. Polar molecules experience greater attraction forces."},{"t":"mc","q":"A surfactant molecule has which structure?","o":["Polar (hydrophilic) head + nonpolar (hydrophobic) tail","Two polar heads","No charge separation","Two nonpolar tails"],"a":0,"e":"Surfactants have a polar hydrophilic head and a nonpolar hydrophobic tail, forming monolayers, bilayers, or micelles."},{"t":"mc","q":"The anesthesia machine flow sensor calculates flow based on:","o":["Molecular weight","Pressure drop across a narrowed area with fixed resistance","Temperature change","Gas color"],"a":1,"e":"The flow sensor senses the pressure drop over a narrowed area with fixed resistance to calculate flow and volume."},{"t":"mc","q":"Chronic uncontrolled hypertension leads to left ventricular hypertrophy, which by Laplace's Law:","o":["Decreases pressure","Increases wall tension","Increases wall thickness to reduce wall stress","Increases radius"],"a":2,"e":"Increased wall thickness reduces wall stress (tension) in response to chronic pressure overload."},{"t":"mc","q":"In the vascular system, decreased vessel diameter causes flow velocity to:","o":["Decrease","Stop","Stay constant","Increase"],"a":3,"e":"Decreased diameter increases flow velocity and creates a pressure gradient (Bernoulli/continuity)."},{"t":"fib","q":"A fluid is defined by its response to ________.","a":["stress","pressure"],"e":"Fluids yield to external pressure ('stress')."},{"t":"fib","q":"Friction in a fluid is proportional to its ________.","a":["viscosity"],"e":"Friction ∝ viscosity."},{"t":"fib","q":"The three types of flow are laminar, turbulent, and ________.","a":["transitional"],"e":"Laminar, turbulent, transitional."},{"t":"fib","q":"________ Law describes laminar flow through a narrow tube.","a":["poiseuille's","poiseuille","poiseuilles"],"e":"Poiseuille's Law."},{"t":"fib","q":"In Poiseuille's Law, flow is proportional to the radius raised to the ________ power.","a":["4th","fourth","4"],"e":"Radius to the 4th power."},{"t":"fib","q":"________ number is a dimensionless value predicting laminar vs turbulent flow.","a":["reynold's","reynolds","reynold","reynolds'"],"e":"Reynold's number."},{"t":"fib","q":"The ________ effect states that as fluid velocity increases, pressure decreases.","a":["bernoulli","bernoulli's","bernoullis"],"e":"Bernoulli effect."},{"t":"fib","q":"The ________ effect uses increased velocity/decreased pressure to entrain air or fluid.","a":["venturi"],"e":"Venturi effect (e.g., Venturi mask)."},{"t":"fib","q":"The ________ effect is the tendency of fluid to follow a curved surface after a constriction.","a":["coanda"],"e":"Coanda (wall attachment) effect."},{"t":"fib","q":"Flow = pressure gradient ÷ ________ (the hemodynamic form of Ohm's Law).","a":["resistance"],"e":"Flow = pressure gradient ÷ resistance."},{"t":"fib","q":"The Law of ________ relates wall tension to pressure and radius.","a":["laplace"],"e":"Law of Laplace: T = P × R."},{"t":"fib","q":"For a cylinder, Wall Tension = Pressure × ________.","a":["radius"],"e":"T = P × R."},{"t":"fib","q":"________ (made by alveolar type II cells) decreases surface tension in the alveolus.","a":["surfactant"],"e":"Surfactant reduces alveolar surface tension."},{"t":"fib","q":"________ is a fluid's internal resistance to flow.","a":["viscosity"],"e":"Viscosity = resistance to flow."},{"t":"fib","q":"If an object's density is greater than the fluid, it will ________.","a":["sink"],"e":"Denser than the fluid → sinks."},{"t":"fib","q":"Heliox reduces turbulent flow by decreasing gas ________.","a":["density"],"e":"Heliox lowers density, reducing Reynold's number."},{"t":"fib","q":"Blood flow is normally mostly ________ flow.","a":["laminar"],"e":"Blood flow is mostly laminar."},{"t":"fib","q":"Reynold's number is inversely proportional to fluid ________.","a":["viscosity"],"e":"Nᵣ is inversely proportional to viscosity."},{"t":"fib","q":"Polar compounds dissolve best in other ________ compounds ('like dissolves like').","a":["polar"],"e":"Polar dissolves polar."},{"t":"fib","q":"As an aneurysm's radius increases, wall tension ________, raising rupture risk.","a":["increases"],"e":"Larger radius → greater wall tension."}];
+window.QB.energy=[{"t":"mc","q":"The primary energy 'currency' molecule of the cell is:","o":["ATP (adenosine triphosphate)","NADH","Pyruvate","Glucose"],"a":0,"e":"ATP is the fuel/energy source for muscle contraction, cell division, and growth. It is not stored in large amounts."},{"t":"mc","q":"The primary source molecule for energy production is:","o":["Fat","Glucose","Lactic acid","Protein"],"a":1,"e":"Glucose is the primary source; energy production is greater from aerobic than anaerobic metabolism."},{"t":"mc","q":"ATP production is GREATER in which type of metabolism?","o":["Fermentation","Anaerobic","Aerobic","Glycolysis alone"],"a":2,"e":"Aerobic metabolism yields far more ATP (≈28+) than anaerobic (≈4)."},{"t":"mc","q":"Glycolysis occurs in the ________ and does not require oxygen.","o":["Cell membrane","Nucleus","Mitochondrial matrix","Cytoplasm/cytosol"],"a":3,"e":"Glycolysis (anaerobic) occurs in the cytosol and is the beginning of energy formation."},{"t":"mc","q":"Glycolysis converts glucose into:","o":["Pyruvic acid (pyruvate)","Acetyl-CoA","Lactic acid","Citrate"],"a":0,"e":"Glycolysis yields 2 pyruvic acid molecules per glucose (net 2 ATP)."},{"t":"mc","q":"The NET ATP yield from glycolysis per glucose molecule is:","o":["4","2","28","0"],"a":1,"e":"Glycolysis uses 2 ATP and produces 4, for a net of 2 ATP."},{"t":"mc","q":"The Krebs (citric acid) cycle takes place in the:","o":["Cytosol","Ribosome","Matrix of the mitochondria","Cell membrane"],"a":2,"e":"The Krebs cycle occurs in the mitochondrial matrix, releasing H and CO₂."},{"t":"mc","q":"The PRIMARY production of ATP occurs during:","o":["Fermentation","Glycolysis","The Krebs cycle","Oxidative phosphorylation"],"a":3,"e":"Oxidative phosphorylation (in the mitochondria) is the primary site of ATP production."},{"t":"mc","q":"Total ATP produced from AEROBIC metabolism is approximately:","o":["28","4","2","6"],"a":0,"e":"Aerobic metabolism yields ≈28 ATP; anaerobic yields ≈4."},{"t":"mc","q":"Total ATP produced from ANAEROBIC metabolism is approximately:","o":["28","4","0","36"],"a":1,"e":"Anaerobic metabolism yields only ≈4 ATP."},{"t":"mc","q":"Oxidation is defined as the:","o":["Gain of electrons","Loss of oxygen","Loss of electrons","Gain of protons"],"a":2,"e":"Oxidation = loss of electrons; reduction = gain of electrons."},{"t":"mc","q":"Reduction is defined as the:","o":["Loss of electrons","Loss of protons","Gain of oxygen","Gain of electrons"],"a":3,"e":"Reduction = gain of electrons ('reduction' lowers charge)."},{"t":"mc","q":"The lactic acid pathway occurs in which setting?","o":["Anaerobic","High-oxygen","Krebs cycle","Aerobic"],"a":0,"e":"The lactic acid pathway occurs in an anaerobic setting with low ATP production; it provides a sink for end-product formation."},{"t":"mc","q":"Lactic acid can be converted back to ________ and cleared by the liver.","o":["Acetyl-CoA","Pyruvic acid","ATP","Glucose only"],"a":1,"e":"Lactic acid can be converted back to pyruvic acid; the liver clears it."},{"t":"mc","q":"During the conversion of pyruvic acid to acetyl-CoA, how much ATP is produced?","o":["4 ATP","2 ATP","0 ATP","28 ATP"],"a":2,"e":"The pyruvic acid → acetyl-CoA step produces 0 ATP; it generates CO₂ and H."},{"t":"mc","q":"Hydrolysis of ATP (ATP → ADP + Pi) is a(n):","o":["Oxidation of glucose","Reduction reaction","Energy-storing reaction","Energy-releasing reaction"],"a":3,"e":"Splitting ATP to ADP + inorganic phosphate (Pi) releases energy; it requires adding water (hydrolysis)."},{"t":"mc","q":"Catabolic reactions involve:","o":["Breakdown of complex molecules and release of energy","Anabolism","Storing energy","Building complex molecules"],"a":0,"e":"Catabolism = breakdown of complex molecules with release of energy."},{"t":"mc","q":"Anabolic reactions involve:","o":["Breakdown of molecules","Building/strengthening molecules and utilizing energy","Release of energy","Oxidation only"],"a":1,"e":"Anabolism = building new molecules; utilizes (stores) energy."},{"t":"mc","q":"Cellular respiration overall converts glucose and oxygen into CO₂, water, and:","o":["Lactic acid","Protein","Energy (ATP)","Fat"],"a":2,"e":"C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + energy."},{"t":"mc","q":"A LEFT shift of the oxyhemoglobin dissociation curve indicates:","o":["Decreased affinity for O₂","Increased O₂ release","No change in affinity","Increased affinity for O₂"],"a":3,"e":"Left shift = increased affinity for O₂ ('left = love'); occurs in the lungs."},{"t":"mc","q":"A RIGHT shift of the oxyhemoglobin dissociation curve indicates:","o":["Decreased affinity for O₂ (increased release)","Increased affinity for O₂","No O₂ binding","Occurs in the lungs"],"a":0,"e":"Right shift = decreased affinity ('right = release'); occurs near metabolically active tissue."},{"t":"mc","q":"Which causes a RIGHT shift of the oxyhemoglobin curve?","o":["Decreased 2,3-DPG","Increased temperature and increased CO₂","Decreased temperature","Increased pH"],"a":1,"e":"Right shift: increased temperature, increased 2,3-DPG, increased CO₂, decreased pH — favoring O₂ release at tissues."},{"t":"mc","q":"Which causes a LEFT shift of the oxyhemoglobin curve?","o":["Increased CO₂","Increased temperature","Decreased 2,3-DPG and decreased temperature","Decreased pH"],"a":2,"e":"Left shift: decreased temperature, decreased 2,3-DPG, decreased CO₂, increased pH — increasing O₂ affinity in the lungs."},{"t":"mc","q":"Dehydrogenase enzymes promote which process by reducing NAD⁺?","o":["Decarboxylation","Reduction of substrate","Hydrolysis","Oxidative process"],"a":3,"e":"Dehydrogenase reduces NAD⁺ to NADH, promoting the oxidative process."},{"t":"mc","q":"Decarboxylase enzymes promote the removal of ________ from a substrate.","o":["CO₂","Hydrogen only","Water","Phosphate"],"a":0,"e":"Decarboxylase promotes CO₂ removal (dissolving out of the cell into blood for offloading)."},{"t":"mc","q":"In oxidative phosphorylation, ATP synthase converts ADP to:","o":["NADH","ATP","Pyruvate","Glucose"],"a":1,"e":"A concentration gradient drives ATP synthase to convert ADP to ATP."},{"t":"mc","q":"Which is the correct order of aerobic ATP production?","o":["Oxidative phosphorylation → Glycolysis → Krebs","Glycolysis → Oxidative phosphorylation → Krebs","Glycolysis → Krebs cycle → Oxidative phosphorylation","Krebs → Glycolysis → Oxidative phosphorylation"],"a":2,"e":"Glycolysis → (pyruvate to acetyl-CoA) → Krebs cycle → oxidative phosphorylation."},{"t":"mc","q":"The end product of glycolysis under anaerobic conditions in animals is:","o":["Acetyl-CoA","Ethanol","Water","Lactic acid"],"a":3,"e":"Without oxygen, pyruvate → lactic acid (in animals); yeast produces ethanol."},{"t":"fib","q":"The primary energy currency molecule of the cell is ________.","a":["atp","adenosine triphosphate"],"e":"ATP is the cell's energy currency."},{"t":"fib","q":"________ is the primary source molecule for energy production.","a":["glucose"],"e":"Glucose is the primary energy source."},{"t":"fib","q":"________ is the first step of energy formation, occurring in the cytosol without oxygen.","a":["glycolysis"],"e":"Glycolysis begins energy production in the cytosol."},{"t":"fib","q":"Glycolysis converts glucose into 2 molecules of ________ acid.","a":["pyruvic","pyruvate"],"e":"Glycolysis yields 2 pyruvic acid."},{"t":"fib","q":"The net ATP yield from glycolysis is ________.","a":["2","two"],"e":"Net 2 ATP from glycolysis."},{"t":"fib","q":"The Krebs cycle occurs in the ________ of the mitochondria.","a":["matrix"],"e":"Krebs cycle = mitochondrial matrix."},{"t":"fib","q":"________ phosphorylation is the primary site of ATP production.","a":["oxidative"],"e":"Oxidative phosphorylation."},{"t":"fib","q":"Aerobic metabolism yields approximately ________ ATP.","a":["28"],"e":"≈28 ATP from aerobic metabolism."},{"t":"fib","q":"Anaerobic metabolism yields approximately ________ ATP.","a":["4"],"e":"≈4 ATP from anaerobic metabolism."},{"t":"fib","q":"________ is the loss of electrons.","a":["oxidation"],"e":"Oxidation = loss of electrons."},{"t":"fib","q":"________ is the gain of electrons.","a":["reduction"],"e":"Reduction = gain of electrons."},{"t":"fib","q":"The ________ acid pathway occurs in anaerobic conditions and can be reversed to pyruvic acid.","a":["lactic"],"e":"Lactic acid pathway."},{"t":"fib","q":"A ________ shift of the oxyhemoglobin curve = increased affinity for O₂ ('love').","a":["left"],"e":"Left = love (increased affinity), occurs in the lungs."},{"t":"fib","q":"A ________ shift of the oxyhemoglobin curve = decreased affinity for O₂ ('release').","a":["right"],"e":"Right = release (decreased affinity), at active tissue."},{"t":"fib","q":"Catabolism is the ________ of complex molecules with release of energy.","a":["breakdown","break down","breaking down"],"e":"Catabolism = breakdown, releasing energy."},{"t":"fib","q":"Anabolism is the ________ of new molecules, utilizing energy.","a":["building","build","synthesis"],"e":"Anabolism = building, using energy."},{"t":"fib","q":"Cellular respiration: C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + ________.","a":["energy","atp"],"e":"Glucose + oxygen → CO₂ + water + energy."},{"t":"fib","q":"Hydrolysis of ATP releases energy by splitting it into ADP and inorganic ________ (Pi).","a":["phosphate"],"e":"ATP → ADP + Pi (inorganic phosphate) + energy."},{"t":"fib","q":"________ enzymes reduce NAD⁺ to NADH, promoting oxidation.","a":["dehydrogenase"],"e":"Dehydrogenase reduces NAD⁺."},{"t":"fib","q":"Increased temperature, CO₂, and 2,3-DPG all cause a ________ shift of the O₂ curve.","a":["right"],"e":"These favor O₂ release → right shift."}];
+
+</script>
+<script>
+/* ============ Quiz engine ============ */
+const META = {
+  newtonian:{name:"Newtonian Physics", desc:"Motion, force, mass vs weight, levers, pressure & measurement.", color:"var(--s-newtonian)"},
+  gaslaws:{name:"Gas Laws", desc:"Boyle, Charles, Gay-Lussac, Dalton, Henry, Graham, Fick, diffusion.", color:"var(--s-gaslaws)"},
+  kinetics:{name:"Kinetics & Thermodynamics", desc:"Energy, work, power, the four laws, heat transfer, phase change.", color:"var(--s-kinetics)"},
+  fluids:{name:"Fluids & Flow", desc:"Poiseuille, Reynolds, Bernoulli, Venturi, Coanda, Laplace, surfactant.", color:"var(--s-fluids)"},
+  energy:{name:"Energy Production", desc:"ATP, glycolysis, Krebs, oxidative phosphorylation, O₂ curve shifts.", color:"var(--s-energy)"}
+};
+const ORDER = ["newtonian","gaslaws","kinetics","fluids","energy"];
+const app = document.getElementById("app");
+
+// Give every question a stable id + section tag
+ORDER.forEach(sec=>{
+  window.QB[sec].forEach((q,i)=>{ q._sec=sec; q._id=sec+"-"+i; });
+});
+function allQuestions(){ return ORDER.flatMap(s=>window.QB[s]); }
+function sectionCount(s){ return window.QB[s].length; }
+function totalCount(){ return allQuestions().length; }
+
+function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
+function norm(s){ return (s||"").toLowerCase().trim().replace(/\s+/g," ").replace(/[.,;:'’"()°]/g,"").replace(/×/g,"x"); }
+function fibMatch(input, answers){
+  const n = norm(input); if(!n) return false;
+  return answers.some(a=>{ const na=norm(a); return n===na || n.replace(/[-\s]/g,"")===na.replace(/[-\s]/g,""); });
+}
+
+/* ============ State ============ */
+let quiz = null; // {questions, idx, answered[], correct[], title, tagColor, config}
+
+/* ============ Rendering: HOME ============ */
+function renderHome(){
+  quiz=null;
+  let secCards = ORDER.map(s=>{
+    const m=META[s], n=sectionCount(s);
+    const mc=window.QB[s].filter(q=>q.t==="mc").length, fib=n-mc;
+    return `<button class="card" style="--sc:${m.color}" onclick="startSection('${s}')">
+      <span class="bar"></span>
+      <span class="ttl">${m.name}</span>
+      <span class="meta">${n} QUESTIONS · ${mc} MC · ${fib} FILL-IN</span>
+      <span class="desc">${m.desc}</span>
+    </button>`;
+  }).join("");
+
+  app.innerHTML = `
+  <header class="top">
+    <div class="eyebrow">Chemistry &amp; Physics for Nurse Anesthesia · 2026</div>
+    <h1>Exam Review &amp; Practice Bank</h1>
+    <div class="sub">Multiple-choice &amp; fill-in-the-blank drills built from your five lecture decks.</div>
+    <div class="stat-line">${totalCount()} QUESTIONS · 5 SECTIONS · IMMEDIATE FEEDBACK &amp; EXPLANATIONS</div>
+  </header>
+
+  <h2 class="section-head">Study by section</h2>
+  <div class="grid two">${secCards}</div>
+
+  <h2 class="section-head">Mix sections together</h2>
+  <div id="mixPanel"></div>
+
+  <h2 class="section-head">Final sample test</h2>
+  <button class="card wide" style="--sc:var(--s-final)" onclick="startFinal()">
+    <span class="bar"></span>
+    <span class="ttl">Comprehensive Final — 100 questions</span>
+    <span class="meta">ALL 5 SECTIONS · RANDOMIZED · MIXED MC &amp; FILL-IN</span>
+    <span class="desc">A full-length mixed exam drawn evenly across every topic. Score and per-section breakdown at the end.</span>
+  </button>
+
+  <footer class="foot">BUILT FROM: NEWTONIAN PHYSICS · GAS LAWS · KINETICS &amp; THERMODYNAMICS · FLUIDS &amp; FLOW · ENERGY PRODUCTION</footer>
+  `;
+  renderMixPanel();
+}
+
+/* ============ Mix panel ============ */
+let mixState = { secs:new Set(ORDER), count:25, types:new Set(["mc","fib"]) };
+function renderMixPanel(){
+  const p=document.getElementById("mixPanel");
+  const secChips = ORDER.map(s=>`<span class="chip" role="button" tabindex="0"
+      aria-pressed="${mixState.secs.has(s)}" data-sec="${s}"
+      onclick="toggleMixSec('${s}')" onkeydown="chipKey(event,()=>toggleMixSec('${s}'))">${META[s].name}</span>`).join("");
+  const typeChips = [["mc","Multiple choice"],["fib","Fill-in-blank"]].map(([t,l])=>
+    `<span class="chip" role="button" tabindex="0" aria-pressed="${mixState.types.has(t)}"
+      onclick="toggleMixType('${t}')" onkeydown="chipKey(event,()=>toggleMixType('${t}'))">${l}</span>`).join("");
+  const counts=[10,25,50,75,"All"].map(c=>`<span class="chip" role="button" tabindex="0"
+      aria-pressed="${(c==='All'&&mixState.count==='All')||mixState.count===c}"
+      onclick="setMixCount(${c==='All'?"'All'":c})" onkeydown="chipKey(event,()=>setMixCount(${c==='All'?"'All'":c}))">${c}</span>`).join("");
+  const avail = poolFor().length;
+  p.innerHTML = `<div class="panel">
+    <h3>Build a custom mixed quiz</h3>
+    <p class="hint">Pick any combination of sections, question types, and length. Questions are randomized each run.</p>
+    <label class="field">Sections</label>
+    <div class="row">${secChips}</div>
+    <label class="field">Question types</label>
+    <div class="row">${typeChips}</div>
+    <label class="field">Number of questions</label>
+    <div class="row">${counts}</div>
+    <div class="btn-row">
+      <button class="btn" id="mixGo" onclick="startMix()" ${avail===0?"disabled":""}>Start mixed quiz →</button>
+      <span class="qcount">${avail} question${avail===1?"":"s"} available</span>
+    </div>
+  </div>`;
+}
+function poolFor(){
+  return allQuestions().filter(q=>mixState.secs.has(q._sec) && mixState.types.has(q.t));
+}
+window.toggleMixSec=s=>{ if(mixState.secs.has(s))mixState.secs.delete(s); else mixState.secs.add(s); if(mixState.secs.size===0)mixState.secs.add(s); renderMixPanel(); };
+window.toggleMixType=t=>{ if(mixState.types.has(t))mixState.types.delete(t); else mixState.types.add(t); if(mixState.types.size===0)mixState.types.add(t); renderMixPanel(); };
+window.setMixCount=c=>{ mixState.count=c; renderMixPanel(); };
+window.chipKey=(e,fn)=>{ if(e.key==="Enter"||e.key===" "){e.preventDefault();fn();} };
+
+/* ============ Quiz starters ============ */
+window.startSection=function(s){
+  const qs = shuffle(window.QB[s]);
+  launch(qs, META[s].name, META[s].color, {kind:"section"});
+};
+window.startMix=function(){
+  let pool = shuffle(poolFor());
+  if(mixState.count!=="All") pool = pool.slice(0, mixState.count);
+  const names=[...mixState.secs].map(s=>META[s].name);
+  const title = names.length===ORDER.length ? "Mixed — all sections" : "Mixed — "+names.join(", ");
+  launch(pool, title, "var(--accent)", {kind:"mix"});
+};
+window.startFinal=function(){
+  // Draw ~20 per section, mixed types, then top up to 100
+  let picked=[];
+  ORDER.forEach(s=>{ picked=picked.concat(shuffle(window.QB[s]).slice(0,20)); });
+  picked = shuffle(picked);
+  if(picked.length>100) picked=picked.slice(0,100);
+  launch(picked, "Comprehensive Final", "var(--s-final)", {kind:"final"});
+};
+
+function launch(questions, title, tagColor, config){
+  quiz = { questions, idx:0, title, tagColor, config,
+    answered:new Array(questions.length).fill(null),   // stores chosen index (mc) or text (fib)
+    correct:new Array(questions.length).fill(null) };  // true/false
+  window.scrollTo(0,0);
+  renderQuestion();
+}
+
+/* ============ Rendering: QUESTION ============ */
+function renderQuestion(){
+  const {questions,idx}=quiz;
+  const q=questions[idx];
+  const answeredCount = quiz.correct.filter(v=>v!==null).length;
+  const score = quiz.correct.filter(v=>v===true).length;
+  const pct = Math.round(((idx)/questions.length)*100);
+  const m = META[q._sec];
+
+  app.innerHTML = `
+  <header class="top">
+    <div class="eyebrow">${quiz.title}</div>
+    <h1 style="font-size:23px">${escapeHtml(shortTitle())}</h1>
+  </header>
+  <div class="quizbar">
+    <div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div>
+    <span class="qcount">Q ${idx+1} / ${questions.length}</span>
+    <span class="scorepill">${score} correct</span>
+  </div>
+  <div class="qcard">
+    <span class="tag" style="background:${m.color}">${m.name}</span>
+    <span class="qtype">${q.t==="mc"?"Multiple choice":"Fill in the blank"}</span>
+    <div class="qtext">${escapeHtml(q.q)}</div>
+    <div id="answerZone"></div>
+    <div class="fb" id="fb"></div>
+    <div class="nav-row" id="navRow"></div>
+  </div>
+  <div class="btn-row" style="margin-top:16px">
+    <button class="btn ghost sm" onclick="quitToHome()">Exit to menu</button>
+  </div>
+  ${q.t==="fib"?'<div class="kbd-hint">Press <kbd>Enter</kbd> to submit</div>':'<div class="kbd-hint">Press <kbd>1</kbd>–<kbd>4</kbd> to answer</div>'}
+  `;
+
+  const zone=document.getElementById("answerZone");
+  const prior=quiz.answered[idx];
+  if(q.t==="mc") renderMC(q,zone,prior);
+  else renderFIB(q,zone,prior);
+
+  if(quiz.correct[idx]!==null) revealState();
+  else renderNav(false);
+}
+function shortTitle(){
+  const q=quiz.questions[quiz.idx];
+  return quiz.config.kind==="section" ? META[q._sec].name+" review"
+       : quiz.config.kind==="final" ? "Final sample test"
+       : "Custom mixed quiz";
+}
+
+function renderMC(q,zone,prior){
+  zone.innerHTML=`<div class="opts">${q.o.map((o,i)=>
+    `<button class="opt" data-i="${i}" onclick="answerMC(${i})">
+      <span class="key">${String.fromCharCode(65+i)}</span>
+      <span>${escapeHtml(o)}</span>
+    </button>`).join("")}</div>`;
+}
+function renderFIB(q,zone,prior){
+  zone.innerHTML=`<form class="fib-form" onsubmit="return submitFIB(event)">
+    <input class="fib-input" id="fibInput" type="text" autocomplete="off" autocapitalize="off"
+      spellcheck="false" placeholder="Type your answer…" ${prior!=null?`value="${escapeAttr(prior)}"`:""}>
+    <button class="btn sm" type="submit">Check</button>
+  </form>`;
+  setTimeout(()=>{const el=document.getElementById("fibInput"); if(el && quiz.correct[quiz.idx]===null) el.focus();},30);
+}
+
+/* ============ Answering ============ */
+window.answerMC=function(i){
+  const idx=quiz.idx, q=quiz.questions[idx];
+  if(quiz.correct[idx]!==null) return; // locked
+  quiz.answered[idx]=i;
+  quiz.correct[idx]=(i===q.a);
+  revealState();
+};
+window.submitFIB=function(e){
+  e.preventDefault();
+  const idx=quiz.idx, q=quiz.questions[idx];
+  if(quiz.correct[idx]!==null) return false;
+  const val=document.getElementById("fibInput").value;
+  if(!val.trim()) return false;
+  quiz.answered[idx]=val;
+  quiz.correct[idx]=fibMatch(val,q.a);
+  revealState();
+  return false;
+};
+
+function revealState(){
+  const idx=quiz.idx, q=quiz.questions[idx];
+  const isRight=quiz.correct[idx]===true;
+  const fb=document.getElementById("fb");
+
+  if(q.t==="mc"){
+    const btns=[...document.querySelectorAll(".opt")];
+    btns.forEach(b=>{
+      const i=+b.dataset.i; b.disabled=true;
+      if(i===q.a) b.classList.add("correct");
+      if(i===quiz.answered[idx] && i!==q.a) b.classList.add("wrong");
+      if(i!==q.a && i!==quiz.answered[idx]) b.classList.add("dim");
+    });
+    fb.className="fb show "+(isRight?"ok":"no");
+    fb.innerHTML = `<div class="verdict">${isRight?"✓ Correct":"✗ Not quite"}</div>`+
+      (isRight?"":`<div class="ans">Correct answer: <b>${String.fromCharCode(65+q.a)}) ${escapeHtml(q.o[q.a])}</b></div>`)+
+      `<div class="exp">${escapeHtml(q.e)}</div>`;
+  } else {
+    const el=document.getElementById("fibInput");
+    if(el){ el.disabled=true; el.classList.add(isRight?"correct":"wrong"); }
+    const primary = q.a[0];
+    fb.className="fb show "+(isRight?"ok":"no");
+    fb.innerHTML = `<div class="verdict">${isRight?"✓ Correct":"✗ Not quite"}</div>`+
+      `<div class="ans">Accepted answer: <b>${escapeHtml(primary)}</b>${q.a.length>1?` <span style="color:var(--ink-soft)">(also: ${q.a.slice(1).map(escapeHtml).join(", ")})</span>`:""}</div>`+
+      `<div class="exp">${escapeHtml(q.e)}</div>`;
+  }
+  // update score pill live
+  const sp=document.querySelector(".scorepill");
+  if(sp) sp.textContent=quiz.correct.filter(v=>v===true).length+" correct";
+  renderNav(true);
+}
+
+function renderNav(answered){
+  const nav=document.getElementById("navRow");
+  const last = quiz.idx===quiz.questions.length-1;
+  nav.innerHTML=`
+    <button class="btn ghost sm" onclick="prevQ()" ${quiz.idx===0?"disabled":""}>← Back</button>
+    <button class="btn sm" id="nextBtn" onclick="nextQ()" ${answered?"":"disabled"}>
+      ${last?"See results →":"Next →"}
+    </button>`;
+}
+window.prevQ=function(){ if(quiz.idx>0){quiz.idx--; window.scrollTo(0,0); renderQuestion();} };
+window.nextQ=function(){
+  if(quiz.correct[quiz.idx]===null) return;
+  if(quiz.idx===quiz.questions.length-1){ renderResults(); }
+  else { quiz.idx++; window.scrollTo(0,0); renderQuestion(); }
+};
+
+/* ============ Results ============ */
+let reviewFilter="all";
+function renderResults(){
+  window.scrollTo(0,0);
+  const total=quiz.questions.length;
+  const score=quiz.correct.filter(v=>v===true).length;
+  const pct=Math.round((score/total)*100);
+  const grade = pct>=90?"Excellent":pct>=80?"Strong":pct>=70?"Passing":pct>=60?"Review needed":"Keep studying";
+
+  // per-section breakdown
+  const bySec={};
+  quiz.questions.forEach((q,i)=>{
+    (bySec[q._sec]=bySec[q._sec]||{c:0,t:0}); bySec[q._sec].t++;
+    if(quiz.correct[i]) bySec[q._sec].c++;
+  });
+  const secRows = ORDER.filter(s=>bySec[s]).map(s=>{
+    const b=bySec[s], p=Math.round(b.c/b.t*100);
+    return `<div class="review-item" style="--sc:${META[s].color}">
+      <div class="review-q"><b>${META[s].name}</b></div>
+      <div class="review-meta">${b.c} / ${b.t} correct · ${p}%</div>
+    </div>`;
+  }).join("");
+
+  app.innerHTML=`
+  <header class="top">
+    <div class="eyebrow">${quiz.title}</div>
+    <h1>Results</h1>
+  </header>
+  <div class="result-hero">
+    <div class="result-score">${score}<span class="slash"> / ${total}</span></div>
+    <div class="result-pct">${pct}% CORRECT</div>
+    <div class="result-grade" style="color:${pct>=70?'var(--good)':pct>=60?'var(--gold)':'var(--bad)'}">${grade}</div>
+  </div>
+  <div class="btn-row" style="justify-content:center;margin:18px 0 8px">
+    <button class="btn" onclick="retrySame()">Retry this set</button>
+    <button class="btn ghost" onclick="retryMissed()" ${score===total?"disabled":""}>Redo missed only (${total-score})</button>
+    <button class="btn ghost" onclick="renderHome()">Menu</button>
+  </div>
+  ${ORDER.filter(s=>bySec[s]).length>1?`<h2 class="section-head">By section</h2>${secRows}`:""}
+  <h2 class="section-head">Review answers</h2>
+  <div class="filter-row">
+    <span class="chip" role="button" tabindex="0" aria-pressed="${reviewFilter==='all'}" onclick="setFilter('all')" onkeydown="chipKey(event,()=>setFilter('all'))">All (${total})</span>
+    <span class="chip" role="button" tabindex="0" aria-pressed="${reviewFilter==='miss'}" onclick="setFilter('miss')" onkeydown="chipKey(event,()=>setFilter('miss'))">Missed (${total-score})</span>
+    <span class="chip" role="button" tabindex="0" aria-pressed="${reviewFilter==='hit'}" onclick="setFilter('hit')" onkeydown="chipKey(event,()=>setFilter('hit'))">Correct (${score})</span>
+  </div>
+  <div id="reviewList"></div>
+  <footer class="foot">CHEMISTRY &amp; PHYSICS FOR NURSE ANESTHESIA · 2026</footer>
+  `;
+  renderReviewList();
+}
+window.setFilter=f=>{ reviewFilter=f; document.querySelectorAll(".filter-row .chip").forEach(c=>c.setAttribute("aria-pressed","false")); renderResults(); };
+function renderReviewList(){
+  const list=document.getElementById("reviewList");
+  let html="";
+  quiz.questions.forEach((q,i)=>{
+    const hit=quiz.correct[i]===true;
+    if(reviewFilter==="miss"&&hit) return;
+    if(reviewFilter==="hit"&&!hit) return;
+    const your = q.t==="mc"
+      ? (quiz.answered[i]!=null? String.fromCharCode(65+quiz.answered[i])+") "+q.o[quiz.answered[i]] : "—")
+      : (quiz.answered[i]||"—");
+    const corr = q.t==="mc" ? String.fromCharCode(65+q.a)+") "+q.o[q.a] : q.a[0];
+    html+=`<div class="review-item ${hit?'hit':'miss'}">
+      <div class="review-q"><span class="rev-badge ${hit?'hit':'miss'}">${hit?'✓':'✗'}</span>${escapeHtml(q.q)}</div>
+      ${hit?"":`<div class="review-meta">Your answer: ${escapeHtml(your)}</div>`}
+      <div class="review-meta">Correct: <b>${escapeHtml(corr)}</b></div>
+      <div class="review-meta" style="margin-top:5px">${escapeHtml(q.e)}</div>
+    </div>`;
+  });
+  list.innerHTML = html || `<p class="hint" style="color:var(--ink-soft)">Nothing to show here.</p>`;
+}
+window.retrySame=function(){ launch(shuffle(quiz.questions), quiz.title, quiz.tagColor, quiz.config); };
+window.retryMissed=function(){
+  const missed=quiz.questions.filter((q,i)=>quiz.correct[i]!==true);
+  if(missed.length) launch(shuffle(missed), quiz.title+" · missed", quiz.tagColor, quiz.config);
+};
+window.quitToHome=function(){
+  const done=quiz.correct.filter(v=>v!==null).length;
+  if(done>0 && !confirm("Exit this quiz? Your progress on it will be lost.")) return;
+  renderHome();
+};
+
+/* ============ Utils ============ */
+function escapeHtml(s){ return (s+"").replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c])); }
+function escapeAttr(s){ return escapeHtml(s).replace(/"/g,"&quot;"); }
+
+/* keyboard */
+document.addEventListener("keydown",e=>{
+  if(!quiz) return;
+  const q=quiz.questions[quiz.idx];
+  if(quiz.correct[quiz.idx]===null && q.t==="mc" && ["1","2","3","4"].includes(e.key)){
+    const i=+e.key-1; if(i<q.o.length) answerMC(i);
+  } else if(quiz.correct[quiz.idx]!==null && (e.key==="Enter"||e.key==="ArrowRight")){
+    const nb=document.getElementById("nextBtn"); if(nb && !nb.disabled) nextQ();
+  } else if(e.key==="ArrowLeft"){ if(quiz.idx>0) prevQ(); }
+});
+
+renderHome();
+
+</script>
+</body>
+</html>
